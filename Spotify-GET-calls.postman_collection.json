@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "ed149818-fa81-4787-bbfa-dad56f702b17",
+		"name": "Spotify-GET-calls",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET my spotify playlists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json().items;",
+							"console.log(data.length);",
+							"//user aceseaza playlist si sunt corecte",
+							"",
+							"pm.test('Number of playlists is ' + data.length,",
+							"    function(){",
+							"        pm.expect(data.length).to.equal(13)",
+							"    }",
+							")",
+							"",
+							"pm.test('Playist 11 is called' + data[10].name,",
+							"    function(){",
+							"        pm.expect(data[11].name).to.equal('Yummy – Justin Bieber')",
+							"    }",
+							")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authToken}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseUrlSpotify}}/me/playlists",
+					"host": [
+						"{{baseUrlSpotify}}"
+					],
+					"path": [
+						"me",
+						"playlists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Selena Gomez artist",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer BQD9A6XQviF9ys1LulY5Txw4zsUZ4l3pKI3TJ-6ttGodLHOg08-96CXf_dHw-NwjSrG6tGKQNJdOMYpk5qVbFygEwCs08VqnEwgDvTa3TINYWF0i91qPtXNQOBgKG80D9QhSe5msh3fy2GnbbbOie8JrNRnoojQFgqiXfIUefcZIrwT-r5GGwimgPyeA1EyWH3d_LExFoT8eeulnQXGEC2YJc6cAak7NUGiOWzA",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{baseUrlSpotify}}/artists/0C8ZW7ezQVs4URX5aX7Kqx",
+					"host": [
+						"{{baseUrlSpotify}}"
+					],
+					"path": [
+						"artists",
+						"0C8ZW7ezQVs4URX5aX7Kqx"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET show Mind Architect ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json().episodes.items;",
+							"var stats = pm.response;",
+							"",
+							"pm.test('Response code is ' + stats.code,",
+							"    function () {",
+							"        pm.expect(stats.code).to.equal(200)",
+							"    }",
+							")",
+							"",
+							"pm.test('Response time is ' + stats.responseTime,",
+							"    function(){",
+							"        pm.expect(stats.responseTime).to.lt(300)",
+							"    }",
+							")",
+							"",
+							"pm.test('Items returned are an array of length: ' + data.length,",
+							"    function(){",
+							"        pm.expect(data).to.be.an('array')",
+							"    }",
+							")",
+							"",
+							"pm.test('Last episode is ' + data[0].name,",
+							"    function(){",
+							"        pm.expect(data[0].name).to.contain('Sezonul 5, Între Sezoane - Cât de mult contează povestea pe care ne-o spunem despre ceea ce trăim în ceea ce trăim')",
+							"    }",
+							")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrlSpotify}}/shows/2i93Ub9rGWTNVyEg0rsxPb",
+					"host": [
+						"{{baseUrlSpotify}}"
+					],
+					"path": [
+						"shows",
+						"2i93Ub9rGWTNVyEg0rsxPb"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
